@@ -5,6 +5,8 @@ import requests
 def call(number, name):
     url = "https://api.vapi.ai/call/phone"
 
+    print("Starting call")
+
     payload = {
         "assistant": {
             "model": {
@@ -21,7 +23,7 @@ def call(number, name):
             "firstMessage": f"Olá {name}, fala a Carla da Flora Dentista, marcou uma consulta para daqui a 2 dias às catorze e quero pedir-lhe que a confirme.",
             "endCallFunctionEnabled": True,
             "endCallMessage": "Adeus",
-            "endCallPhrases": ["Obrigado pelo seu tempo. Continuação de um bom dia.", "Obrigado pela sua atenção. Desejo-lhe um bom dia."],
+            # "endCallPhrases": ["Continuação de um bom dia.", "Obrigado."],
             "forwardingPhoneNumber": "+351910229854",
             "name": "Carla",
             "transcriber":{
@@ -49,10 +51,18 @@ def call(number, name):
         "Content-Type": "application/json"
     }
 
-    response = requests.request("POST", url, json=payload, headers=headers)
-    # response = requests.request("POST", url, json=payload, headers=headers, hooks={'response': get_response})
+    print("Starting request")
 
+    response = requests.request("POST", url, json=payload, headers=headers)
+
+    print("DONE")
     print(response.json)
+
+    if response.status_code == 200:
+        print("Call initiated successfully")
+    else:
+        print(f"Error: {response.status_code}")
+        print("Details:", response.json())
 
 
 
@@ -60,7 +70,7 @@ def submit_action(telefonnummer, name):
     """
     Funktion, die ausgelöst wird, wenn der Submit-Button gedrückt wird.
     """
-    # Hier können weitere Aktionen durchgeführt werden, wie z.B. die Daten speichern oder verarbeiten
+    call(telefonnummer, name)
     st.success(f"Number: {telefonnummer}, Name: {name}")
 
 def main():
@@ -68,13 +78,13 @@ def main():
     
     # Erstellen der Input Felder
     name = st.text_input("Name", placeholder="Client Name")
-    telefonnummer = st.text_input("Number", placeholder="Client Phone")
+    number = st.text_input("Number", placeholder="Client Phone")
     
     # Submit Button
     submit_button = st.button('Submit')
     
     if submit_button:
-        call(telefonnummer, name)
+        submit_action(number, name)
 
 if __name__ == "__main__":
     main()
