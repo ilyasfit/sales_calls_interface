@@ -64,8 +64,7 @@ def submit_action(telefonnummer, name):
     st.success(f"Number: {telefonnummer}, Name: {name}")
 
 def main():
-    st.title('RIP CALLS')
-    st.subheader('10k days lets go')
+    st.title('RIP CALLS | 10k DAYS')
     
     # Erstellen der Input Felder
     name = st.text_input("Name", placeholder="Client Name")
