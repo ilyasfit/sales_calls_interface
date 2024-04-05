@@ -23,7 +23,6 @@ def call(number, name):
             "firstMessage": f"Olá {name}, fala a Carla da Flora Dentista, marcou uma consulta para daqui a 2 dias às catorze e quero pedir-lhe que a confirme.",
             "endCallFunctionEnabled": True,
             "endCallMessage": "Adeus",
-            # "endCallPhrases": ["Continuação de um bom dia.", "Obrigado."],
             "forwardingPhoneNumber": "+351910229854",
             "name": "Carla",
             "transcriber":{
@@ -55,14 +54,21 @@ def call(number, name):
 
     response = requests.request("POST", url, json=payload, headers=headers)
 
-    print("DONE")
-    print(response.json)
+    print("Starting request")
+    response = requests.request("POST", url, json=payload, headers=headers)
 
+    print("Request completed")
     if response.status_code == 200:
-        print("Call initiated successfully")
+        try:
+            response_json = response.json()
+            print("Call initiated successfully")
+            # Further processing with response_json here
+        except requests.exceptions.JSONDecodeError:
+            print("Failed to decode JSON from response. Raw response:", response.text)
     else:
         print(f"Error: {response.status_code}")
-        print("Details:", response.json())
+        print("Raw response content:", response.text)
+
 
 
 
