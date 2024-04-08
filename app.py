@@ -7,22 +7,54 @@ def call(number, name, clinic_name):
 
     print("Starting call")
 
+
+    prompt_1 = """You are a portuguese receptionist in a dental clinic, calling the client that has an upcoming appointment in 48 hours.   
+                        You ask them to confirm it. If they confirm, end the call. If they want to reschedule, ask them what day and time and book with them the appointment. 
+                        You don't need to ask for other information besides date and time."""
+
+    prompt_2 = """
+    Your only job is to understand if the user confirms or not.
+    If they confirm, "confirmo" (agree), say "sim" (yes), say "thank you" and end the call.
+
+    If they say no, "agora" or intent to reschedule, forward the call.
+
+    You do not reschedule, you only forward the call.
+    """
+
+    assistant_prompt = """ Your job is to understand if the user confirms or not.
+    If they confirm, say "thank you" and end the call.
+    If they say no or intent to reschedule, forward the call. """
+    
+    # prompt_2 = """Tu és uma recepcionista que trabalha para clínicas dentárias. Vais ligar aos clientes para lhes dizer que eles tem consulta agendada.
+    #                 Se os clientes confirmarem que vão comparecer, agredeces a confirmaÇão e terminas a chamada. Se eles desconfirmarem, ou seja disserem que não podem comparecer,
+    #                 dizes que vais reencaminhar a chamada para as recepcionistas da clínica para eles reagendarem a consulta. Logo a seguir reencaminhas a chamada.
+    #                     """
+
     payload = {
         "assistant": {
             "model": {
                 "messages": [
                     {
-                        "content": "You are a portuguese receptionist in a dental clinic, calling the client that has an upcoming appointment in 48 hours.   You ask them to confirm it. If they confirm, end the call. If they want to reschedule, ask them what day and time and book with them the appointment. You don't need to ask for other information besides date and time.",
-                        "role": "system"
-                    }
+                        "content": prompt_2,
+                        "role": "assistant"
+                    },
+                    # {
+                    #     "content": assistant_prompt,
+                    #     "role": "assistant"
+                    # }
                 ],
                 "model": "gpt-4-1106-preview",
                 "provider": "openai",
                 "temperature": 0.7,
             },
-            "firstMessage": f"Olá {name}, fala a Eiva da clínica {clinic_name}. Estou a ligar para relembrar que tem uma consulta agendada para amanha às duas da tarde, confirma que vai estar presente?",
+            "firstMessage": f"Olá {name}, eu sou o assistente virtual da clínica {clinic_name}, estou a ligar para confirmar que tem uma consulta agendada para amanhã às catorze horas. Diga sim para confirmar a sua presença.",
             # "endCallFunctionEnabled": True,
-            # "endCallMessage": "Adeus",
+            # "endCallPhrases": [
+            #     "Sim",
+            #     "Confirmo",
+            #     "Sim, confirmo"
+            # ],
+            # "endCallMessage": "Obrigado pelo seu tempo. Tenha um bom dia.",
             "forwardingPhoneNumber": "+351910229854",
             "name": "Carla",
             "transcriber":{
@@ -69,7 +101,12 @@ def call(number, name, clinic_name):
         print(f"Error: {response.status_code}")
         print("Raw response content:", response.text)
 
+# """
+# Olá [name], eu sou o assistente virtual da clínica [clinic name], estou a ligar para confirmar que tem uma consulta agendada para [day and time]. Diga sim para confirmar a sua presença. No caso de não poder será reecaminhado para as nossas recepcionistas.
 
+# Olá [name], eu sou o assistente virtual da clínica [clinic name], estou a ligar para confirmar que tem uma consulta agendada para amanhã às catorze horas. Diga sim para confirmar a sua presença. No caso de não poder será reecaminhado para as nossas recepcionistas.
+
+# """
 
 
 def submit_action(telefonnummer, name, clinic_name):
