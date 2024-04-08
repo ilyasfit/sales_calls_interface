@@ -2,7 +2,7 @@ import streamlit as st
 import requests
 
 
-def call(number, name):
+def call(number, name, clinic_name):
     url = "https://api.vapi.ai/call/phone"
 
     print("Starting call")
@@ -20,7 +20,7 @@ def call(number, name):
                 "provider": "openai",
                 "temperature": 0.7,
             },
-            "firstMessage": f"Olá {name}, fala a Carla da Flora Dentista. Estou a ligar para relembrar que tem uma consulta agendada para [day and time], confirma que vai estar presente?",
+            "firstMessage": f"Olá {name}, fala a Ava da {clinic_name}. Estou a ligar para relembrar que tem uma consulta agendada para [day and time], confirma que vai estar presente?",
             # "endCallFunctionEnabled": True,
             # "endCallMessage": "Adeus",
             "forwardingPhoneNumber": "+351910229854",
@@ -72,17 +72,18 @@ def call(number, name):
 
 
 
-def submit_action(telefonnummer, name):
+def submit_action(telefonnummer, name, clinic_name):
     """
     Funktion, die ausgelöst wird, wenn der Submit-Button gedrückt wird.
     """
-    call(telefonnummer, name)
+    call(telefonnummer, name, clinic_name)
     st.success(f"Number: {telefonnummer}, Name: {name}")
 
 def main():
     st.title('RIP CALLS | 10k DAYS')
     
     # Erstellen der Input Felder
+    number = st.text_input("Flora Dentista", placeholder="Clinic name")
     name = st.text_input("Name", placeholder="Client Name")
     number = st.text_input("Number", placeholder="Client Phone")
     
@@ -90,7 +91,7 @@ def main():
     submit_button = st.button('Submit')
     
     if submit_button:
-        submit_action(number, name)
+        submit_action(number, name, clinic_name)
 
 if __name__ == "__main__":
     main()
