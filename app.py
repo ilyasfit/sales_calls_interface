@@ -83,7 +83,7 @@ def main():
     st.title('RIP CALLS | 10k DAYS')
     
     # Erstellen der Input Felder
-    number = st.text_input("Flora Dentista", placeholder="Clinic name")
+    clinic_name = st.text_input("Clinic name", placeholder="Flora Dentista")
     name = st.text_input("Name", placeholder="Client Name")
     number = st.text_input("Number", placeholder="Client Phone")
     
