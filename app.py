@@ -20,7 +20,7 @@ def call(number, name, clinic_name):
                 "provider": "openai",
                 "temperature": 0.7,
             },
-            "firstMessage": f"Olá {name}, fala a Ava da {clinic_name}. Estou a ligar para relembrar que tem uma consulta agendada para [day and time], confirma que vai estar presente?",
+            "firstMessage": f"Olá {name}, fala a Ava da {clinic_name}. Estou a ligar para relembrar que tem uma consulta agendada para duas da tarde, confirma que vai estar presente?",
             # "endCallFunctionEnabled": True,
             # "endCallMessage": "Adeus",
             "forwardingPhoneNumber": "+351910229854",
