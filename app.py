@@ -20,9 +20,9 @@ def call(number, name):
                 "provider": "openai",
                 "temperature": 0.7,
             },
-            "firstMessage": f"Olá {name}, fala a Carla da Flora Dentista, marcou uma consulta para daqui a 2 dias às catorze e quero pedir-lhe que a confirme.",
-            "endCallFunctionEnabled": True,
-            "endCallMessage": "Adeus",
+            "firstMessage": f"Olá {name}, fala a Carla da Flora Dentista. Estou a ligar para relembrar que tem uma consulta agendada para [day and time], confirma que vai estar presente?",
+            # "endCallFunctionEnabled": True,
+            # "endCallMessage": "Adeus",
             "forwardingPhoneNumber": "+351910229854",
             "name": "Carla",
             "transcriber":{
