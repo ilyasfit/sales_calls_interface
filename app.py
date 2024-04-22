@@ -12,14 +12,22 @@ def call(number, name, clinic_name):
                         You ask them to confirm it. If they confirm, end the call. If they want to reschedule, ask them what day and time and book with them the appointment. 
                         You don't need to ask for other information besides date and time."""
 
+
+
     prompt_2 = """
     Your only job is to understand if the user confirms or not.
-    If they confirm, "confirmo" (agree), say "sim" (yes), say "thank you" and end the call.
+
+    The rules are: 
+
+    If they confirm, "confirmo" (agree), say "sim" (yes), say "sim confirmo", say "thank you" and end the call.
 
     If they say no, "agora" or intent to reschedule, forward the call.
 
     You do not reschedule, you only forward the call.
     """
+
+
+
 
     assistant_prompt = """ Your job is to understand if the user confirms or not.
     If they confirm, say "thank you" and end the call.
@@ -35,8 +43,8 @@ def call(number, name, clinic_name):
             "model": {
                 "messages": [
                     {
-                        "content": prompt_2,
-                        "role": "assistant"
+                        "content": prompt_1,
+                        "role": "system"
                     },
                     # {
                     #     "content": assistant_prompt,
